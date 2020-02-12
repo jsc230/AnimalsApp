@@ -64,7 +64,7 @@ public class AnimalsApp implements Runnable{
 		
 		//cow = new PlantEater(100, 10, 5, 1, 1, 10, 10);
 				
-		lion = new MeatEater(100, 50, 15, 35, 1, 50, 50);
+		lion = new MeatEater(100, 50, 15, 35, 1, 50, 50, this);
 		
 		
 		//add multiple cows
