@@ -1,19 +1,33 @@
+import java.awt.EventQueue;
+import java.awt.Graphics;
 import java.awt.Point;
 import java.util.ArrayList;
 
-public class AnimalsApp implements Runnable{
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
+public class AnimalsApp extends JPanel implements Runnable{
 	
 	static boolean running = true;
 	//PlantEater cow;
 	MeatEater lion;
 	public ArrayList<PlantEater> cows;
+	static AnimalsApp animalsApp = new AnimalsApp();
+	
 	
 	public static void main(String[] args){
-
+		
+		JFrame frame = new JFrame("Animals App");
+		frame.getContentPane().add(animalsApp);
+		frame.setSize(500, 500);
+		frame.setVisible(true);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setResizable(false);
+		
 		System.out.println("Test Output.");
 		
 		(new Thread(new AnimalsApp())).start();
-		
+				
 	}
 	
 	public void run() {
@@ -28,6 +42,8 @@ public class AnimalsApp implements Runnable{
 	    while(running){
 
 	        updateGame();
+	        repaint();
+	        
 	       // System.out.println("game updated");
 	        next_game_tick = SKIP_TICKS;
 	        sleep_time = 1000; //next_game_tick - System.currentTimeMillis();
@@ -64,7 +80,7 @@ public class AnimalsApp implements Runnable{
 		
 		//cow = new PlantEater(100, 10, 5, 1, 1, 10, 10);
 				
-		lion = new MeatEater(100, 50, 15, 35, 1, 50, 50);
+		lion = new MeatEater(100, 50, 15, 35, 1, 50, 50, this);
 		
 		
 		//add multiple cows
@@ -79,7 +95,7 @@ public class AnimalsApp implements Runnable{
 		};
 		
 		for(int i = 0; i < points.length; i++) {
-			c = new PlantEater(100, 10, 5, 1, 1, 0, 0);
+			c = new PlantEater(100, 10, 5, 1, 1, 0, 0, this);
 			c.setX(points[i].x);
 			c.setY(points[i].y);
 			cows.add(c);
@@ -89,4 +105,21 @@ public class AnimalsApp implements Runnable{
 	public ArrayList<PlantEater> getFoodItems(){
 		return cows;
 	}
+	
+	public MeatEater getLion() {
+		return lion;
+	}
+	
+	@Override
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		
+		final java.awt.Color color = java.awt.Color.BLUE;
+				
+			g.setColor(color);
+			g.fillOval(lion.getX(), lion.getY(), 20, 20);
+			
+	}
+	
+	
 }

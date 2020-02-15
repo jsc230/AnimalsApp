@@ -3,14 +3,13 @@ import java.util.ArrayList;
 public class MeatEater extends Animal {
 	
 	private int cowToEat;
-	AnimalsApp animals = new AnimalsApp();
-	public ArrayList<PlantEater> food = animals.getFoodItems();
+	AnimalsApp animals;
 	
 	public MeatEater() {
 		super();
 	}
 	
-	public MeatEater(int health, int hunger, int speed, int damage, int reproductionRate, int x, int y) {
+	public MeatEater(int health, int hunger, int speed, int damage, int reproductionRate, int x, int y, AnimalsApp animals) {
 		this.health = health;
 		this.hunger = hunger;
 		this.speed = speed;
@@ -18,6 +17,7 @@ public class MeatEater extends Animal {
 		this.reproductionRate = reproductionRate;
 		this.x = x;
 		this.y = y;
+		this.animals = animals;
 		
 	}
 	
@@ -31,7 +31,7 @@ public class MeatEater extends Animal {
 	
 	public void huntFood() {
 		
-		PlantEater cow = food.get(cowToEat);
+		PlantEater cow = animals.getFoodItems().get(cowToEat);
 		
 		if(cow.getX() < x) {
 			if((getX() - cow.getX()) < speed) {
@@ -74,22 +74,24 @@ public class MeatEater extends Animal {
 	public int findClosestFood() {
 		int closestCow = -1;
 		
-		for(int i = 0; i < food.size(); i++) {
-			PlantEater cow = food.get(i);
-			int x, y, distance;
-			x = cow.getX();
-			y = cow.getY();
-			distance = (int) Math.sqrt((x * x) + (y * y));
-			
+		for(int i = 0; i < animals.getFoodItems().size(); i++) {
+									
 			if(closestCow == -1) {
-				closestCow = distance;
+				closestCow = i;
 			}
-			if(closestCow > distance) {
-				closestCow = distance;
+			if(getDistance(animals.getFoodItems().get(closestCow)) > getDistance(animals.getFoodItems().get(i))) {
+				closestCow = i;
 			}
 		}
 		
 		return closestCow;
+	}
+	
+	private int getDistance(PlantEater cow) {
+		int x = Math.abs(cow.getX() - getX());
+		int y = Math.abs(cow.getY() - getY());
+		
+		return (int) Math.sqrt((x * x) + (y * y));
 	}
 
 }
