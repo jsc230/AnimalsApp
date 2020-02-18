@@ -1,4 +1,3 @@
-import java.awt.EventQueue;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.util.ArrayList;
@@ -26,7 +25,7 @@ public class AnimalsApp extends JPanel implements Runnable{
 		
 		System.out.println("Test Output.");
 		
-		(new Thread(new AnimalsApp())).start();
+		(new Thread(animalsApp)).start();
 				
 	}
 	
@@ -80,7 +79,7 @@ public class AnimalsApp extends JPanel implements Runnable{
 		
 		//cow = new PlantEater(100, 10, 5, 1, 1, 10, 10);
 				
-		lion = new MeatEater(100, 50, 15, 35, 1, 50, 50, this);
+		lion = new MeatEater(100, 50, 15, 35, 1, 150, 150, this);
 		
 		
 		//add multiple cows
@@ -90,12 +89,13 @@ public class AnimalsApp extends JPanel implements Runnable{
 		
 		Point[] points = new Point[] {
 				new Point(10, 10),
-				new Point(20, 20),
-				new Point(30, 30)
+				new Point(200, 200),
+				new Point(300, 300),
+				new Point(150, 30)
 		};
 		
 		for(int i = 0; i < points.length; i++) {
-			c = new PlantEater(100, 10, 5, 1, 1, 0, 0, this);
+			c = new PlantEater(100, 10, 10, 1, 1, 0, 0, this);
 			c.setX(points[i].x);
 			c.setY(points[i].y);
 			cows.add(c);
@@ -114,10 +114,16 @@ public class AnimalsApp extends JPanel implements Runnable{
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		
-		final java.awt.Color color = java.awt.Color.BLUE;
+		final java.awt.Color colorBlue = java.awt.Color.BLUE;
+		final java.awt.Color colorRed = java.awt.Color.RED;
 				
-			g.setColor(color);
-			g.fillOval(lion.getX(), lion.getY(), 20, 20);
+			g.setColor(colorBlue);
+			g.fillOval(lion.getX(), lion.getY(), 5, 5);
+			
+			for(int i = 0; i < cows.size(); i++) {
+				g.setColor(colorRed);
+				g.fillOval(cows.get(i).getX(), cows.get(i).getY(), 5, 5);
+			}
 			
 	}
 	

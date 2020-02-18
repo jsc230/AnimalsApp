@@ -3,7 +3,7 @@ public class PlantEater extends Animal{
 	
 	AnimalsApp animals;
 	private boolean lionClose = false;
-
+	
 	public PlantEater() {
 		super();
 	}
@@ -17,10 +17,30 @@ public class PlantEater extends Animal{
 		this.x = x;
 		this.y = y;
 		this.animals = animals;
+		
 	}
 	
 	public void move() {
-		setX(x + speed);
+		int xMove;
+		int yMove;
+		int walkSpeed = speed / 2;
+		double randDirection = Math.toRadians(Math.random() * 360);
+		
+		if(lionClose == false) {
+			xMove = (int) (Math.cos(randDirection) * walkSpeed);
+			yMove = (int) (Math.sin(randDirection) * walkSpeed);
+		
+			setX(x + xMove);
+			setY(y + yMove);
+		}	
+		
+		if(lionClose == true) {
+			xMove = (int)(Math.cos(directionToLion()) * speed);
+			yMove = (int)(Math.sin(directionToLion()) * speed);
+			
+			setX(x + xMove);
+			setY(y + yMove);
+		}
 	}
 	
 	public void update() {
@@ -35,12 +55,35 @@ public class PlantEater extends Animal{
 		
 		distance = (int) Math.sqrt((x * x) + (y * y));
 		
-		if(distance < 15) {
+		if(distance < 35) {
 			lionClose = true;
 		}else {
 			lionClose = false;
 		}
 		
 		return lionClose;
+	}
+	
+	public double directionToLion() {
+		double directionToLion;
+		int x;
+		int y;
+		
+		x = getX() - animals.getLion().getX();
+		y = getY() - animals.getLion().getY();
+		
+		if(x == 0 && y > 0) {
+			directionToLion = Math.toRadians(90);
+		}
+		else if(x == 0 && y < 0) {
+			directionToLion = Math.toRadians(270);
+		}
+		else if(y == 0 && x < 0) {
+			directionToLion = Math.toRadians(180);
+		}
+		else
+			directionToLion = Math.atan(y / x);
+		
+		return directionToLion;
 	}
 }

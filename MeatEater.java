@@ -32,32 +32,33 @@ public class MeatEater extends Animal {
 	public void huntFood() {
 		
 		PlantEater cow = animals.getFoodItems().get(cowToEat);
+		int xMove;
+		int yMove;
+		double direction;
 		
-		if(cow.getX() < x) {
-			if((getX() - cow.getX()) < speed) {
+		direction = directionToCow(cow);
+	
+		xMove = (int)(Math.cos(direction) * speed);
+		yMove = (int)(Math.sin(direction) * speed);
+		
+		if(getDistance(cow) < speed) {
+			if(cow.getX() < x) {
 				setX(x - (getX() - cow.getX()));
-			}else
-			setX(x - speed);
-		}
-		if(cow.getX() > x) {
-			if((cow.getX() - getX()) < speed) {
+			}
+			if(cow.getX() > x) {
 				setX(x + (cow.getX() - getX()));
-			}else
-			setX(x + speed);
-		}
-		if(cow.getY() < y) {
-			if((getY() - cow.getY()) < speed) {
+			}
+			if(cow.getY() < y) {
 				setY(y - (getY() - cow.getY()));
-			}else
-			setY(y - speed);
-		}
-		if(cow.getY() > y) {
-			if((cow.getY() - getY()) < speed) {
+			}
+			if(cow.getY() > y) {
 				setY(y + (cow.getY() - getY()));
-			}else
-			setY(y + speed);
+			}
+		}else {		
+			setX(x + xMove);
+			setY(y + yMove);
 		}
-		
+				
 	}
 	
 	public void getHungry() {
@@ -92,6 +93,30 @@ public class MeatEater extends Animal {
 		int y = Math.abs(cow.getY() - getY());
 		
 		return (int) Math.sqrt((x * x) + (y * y));
+	}
+	
+	private double directionToCow(PlantEater cow) {
+		double direction;
+		int x;
+		int y;
+		
+		x = getX() - cow.getX();
+		y = getY() - cow.getY();
+		
+		if(x == 0 && y > 0) {
+			direction = Math.toRadians(90);
+		}
+		else if(x == 0 && y < 0) {
+			direction = Math.toRadians(270);
+		}
+		else if(y == 0 && x < 0) {
+			direction = Math.toRadians(180);
+		}
+		else {
+			direction = Math.atan(y/x);
+		}
+		
+		return direction;
 	}
 
 }
