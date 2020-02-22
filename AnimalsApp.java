@@ -70,7 +70,7 @@ public class AnimalsApp extends JPanel implements Runnable{
 		
 		for(int i = 0; i < cows.size(); i++) {
 			if(cows.get(i).getX() == lion.getX() && cows.get(i).getY() == lion.getY()) {
-				running = false;
+				cows.remove(i);
 			}
 		}
 	}

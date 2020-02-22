@@ -1,0 +1,24 @@
+if(cow.getX() < x) {
+			if((getX() - cow.getX()) < speed) {
+				setX(x - (getX() - cow.getX()));
+			}else
+			setX(x - speed);
+		}
+		if(cow.getX() > x) {
+			if((cow.getX() - getX()) < speed) {
+				setX(x + (cow.getX() - getX()));
+			}else
+			setX(x + speed);
+		}
+		if(cow.getY() < y) {
+			if((getY() - cow.getY()) < speed) {
+				setY(y - (getY() - cow.getY()));
+			}else
+			setY(y - speed);
+		}
+		if(cow.getY() > y) {
+			if((cow.getY() - getY()) < speed) {
+				setY(y + (cow.getY() - getY()));
+			}else
+			setY(y + speed);
+		}

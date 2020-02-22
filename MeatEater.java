@@ -58,6 +58,10 @@ public class MeatEater extends Animal {
 			setX(x + xMove);
 			setY(y + yMove);
 		}
+		
+		if(cow.getX() == getX() && cow.getY() == getY()) {
+			eatFood();
+		}
 				
 	}
 	
@@ -117,6 +121,10 @@ public class MeatEater extends Animal {
 		}
 		
 		return direction;
+	}
+	
+	public void eatFood() {
+		hunger = 0;
 	}
 
 }
